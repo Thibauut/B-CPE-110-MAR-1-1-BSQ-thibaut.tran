@@ -53,6 +53,16 @@ int read_map_for_bug(char **map, int nb_rows, int nb_cols)
     return (1);
 }
 
+int check_one(char **map, int nb_rows, int nb_cols, int row, int col)
+{
+    if (nb_rows == 1 && nb_cols == 1) {
+        if (map[row][col] == 'x')
+            return (0);
+    }
+    my_show_word_array(map);
+    return (0);
+}
+
 int main(int ac, char **av)
 {
     if (ac != 2)
@@ -62,6 +72,7 @@ int main(int ac, char **av)
     int rows = my_getnbr(load_file_in_mem(av[1])) + 1, cols = nb_cols(av);
     int row = 0, col = 0;
     char **tab = load_my_tab_from_file(av[1], rows, cols);
+    check_one(tab, rows, cols, row, col);
     if (read_map_filled(tab, rows, cols) == 84)
         return (84);
     int i = find_bsq(tab, rows, cols, row, col);

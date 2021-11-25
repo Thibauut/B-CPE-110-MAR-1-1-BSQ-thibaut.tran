@@ -35,7 +35,7 @@ char *my_strncpy (char *dest, char const *src, int n)
 int my_show_word_array(char *const *tab)
 {
     int a = 0;
-    while (tab[a] != 0) {
+    while (tab[a + 1] != NULL) {
         my_putstr(tab[a]);
         my_putchar('\n');
         a++;
