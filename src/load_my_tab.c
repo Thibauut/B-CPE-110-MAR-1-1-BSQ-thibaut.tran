@@ -7,6 +7,13 @@
 
 #include "../include/my.h"
 
+int my_strlen(char const *str)
+{
+    int i = 0;
+    for (; str[i]; i += 1);
+    return i;
+}
+
 int open_my_file(char const *filepath)
 {
     int fd = open(filepath, O_RDONLY);
@@ -35,19 +42,22 @@ char *load_file_in_mem(char const *filepath)
 
 char **load_my_tab_from_file(char const *filepath, int nb_rows, int nb_cols)
 {
-    int i = 0;
-    int j = 0;
-    char *buffer = load_file_in_mem(filepath);
-    char **tab = malloc(sizeof(char *) * (nb_cols + 1));
+    int i = 0, j = 0, k = 0;
+    char *tab_str = load_file_in_mem(filepath);
+    struct stat buf;
+    stat(filepath, &buf);
+    int size_tab = buf.st_size;
+    char **tab = malloc(sizeof(char *) * size_tab);
+    while (tab_str[k] != '\n')
+        k += 1;
+    k += 1;
     while (i < nb_rows) {
+        tab[i] = malloc(sizeof(char *) * nb_cols);
         while (j < nb_cols) {
-            j += 1;
+            tab[i][j] = tab_str[k];
+            j += 1, k += 1;
         }
-        tab[i] = malloc(sizeof(char) * (nb_cols));
-        tab[i] = my_strncpy(tab[i], buffer, nb_cols);
-        buffer = &buffer[j];
-        j = 0;
-        i += 1;
+        j = 0, k += 1, i += 1;
     }
     return (tab);
 }

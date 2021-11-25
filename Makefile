@@ -5,9 +5,10 @@
 ## Makefile
 ##
 
-SRC	=	src/my_func.c	\
-		src/load_my_tab.c	\
+SRC	=	src/load_my_tab.c	\
 		src/find_bsq.c	\
+		src/my_func.c	\
+		src/check_error.c	\
 		src/main.c
 
 OBJ	=	$(SRC:.c=.o)

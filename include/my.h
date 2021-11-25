@@ -12,17 +12,17 @@
 #include <sys/stat.h>
 
 typedef struct struc_s {
-    int size_sq;
-    int stock_size_sq;
     int stock_row;
     int stock_col;
-    int k;
 } my_struct_t;
 
 #ifndef MY_H_
 #define MY_H_
 
+void my_putchar(char c);
 void my_putstr(char *str);
+int my_getnbr(char const *str);
+int my_strlen(char const *str);
 int my_show_word_array(char * const *tab);
 char *my_strncpy (char *dest, char const *src, int n);
 void read_my_file(int fd, char *buffer, int size);
@@ -36,6 +36,6 @@ char **load_map(char **map, int size, int pos_row, int pos_col);
 int find_row(char **map, int nb_rows, int nb_cols, int row, int col);
 int find_col(char **map, int nb_rows, int nb_cols, int row, int col);
 int read_map_for_bug(char **map, int nb_rows, int nb_cols);
-int read_map_for_error(char **map, int nb_rows, int nb_cols);
+int read_map_filled(char **map, int nb_rows, int nb_cols);
 
 #endif

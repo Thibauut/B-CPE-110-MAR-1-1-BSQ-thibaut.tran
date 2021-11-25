@@ -7,41 +7,17 @@
 
 #include "../include/my.h"
 
-int nb_rows(char const *filepath)
+int nb_cols(char **av)
 {
-    int size_y = 1;
     int i = 0;
-    struct stat buf;
-    stat(filepath, &buf);
-    int size = buf.st_size;
-    char *buffer = malloc(sizeof(char) * size);
-    int fd = open(filepath, O_RDONLY);
-    read(fd, buffer, size);
-    while (buffer[i] != '\0') {
-        if (buffer[i] == '\n')
-            size_y += 1;
+    int nb_cols = 0;
+    char *tab_str = load_file_in_mem(av[1]);
+    while (tab_str[i] != '\n')
         i += 1;
-    }
-    return (size_y);
-    close(fd);
-}
-
-int nb_cols(char const *filepath)
-{
-    int size_y = 1;
-    int i = 0;
-    struct stat buf;
-    stat(filepath, &buf);
-    int size = buf.st_size;
-    char *buffer = malloc(sizeof(char) * size);
-    int fd = open(filepath, O_RDONLY);
-    read(fd, buffer, size);
-    while (buffer[i] != '\n') {
-        size_y += 1;
-        i += 1;
-    }
-    return (size_y);
-    close(fd);
+    i += 1;
+    while (tab_str[i + nb_cols] != '\n')
+        nb_cols += 1;
+    return (nb_cols);
 }
 
 char **load_map(char **map, int size, int pos_row, int pos_col)
@@ -83,14 +59,14 @@ int main(int ac, char **av)
         return (84);
     if (open_my_file(av[1]) == 84)
         return (84);
-    int rows = nb_rows(av[1]);
-    int cols = nb_cols(av[1]);
-    int row = 0;
-    int col = 0;
+    int rows = my_getnbr(load_file_in_mem(av[1])) + 1, cols = nb_cols(av);
+    int row = 0, col = 0;
     char **tab = load_my_tab_from_file(av[1], rows, cols);
+    if (read_map_filled(tab, rows, cols) == 84)
+        return (84);
     int i = find_bsq(tab, rows, cols, row, col);
-    int pos_col = find_col(tab, rows, cols, row, col);
     int pos_row = find_row(tab, rows, cols, row, col);
+    int pos_col = find_col(tab, rows, cols, row, col);
     char **map = load_map(tab, i, pos_row, pos_col);
     my_show_word_array(map);
 }
