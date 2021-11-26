@@ -7,6 +7,28 @@
 
 #include "../include/my.h"
 
+int read_map_fix_rowline(char **map, int nb_rows, int nb_cols)
+{
+    if ((nb_rows - 1) == 1 && nb_cols > 1) {
+        if (map[0][0] == '.')
+            map[0][0] = 'x';
+        my_show_word_array(map);
+        return (1);
+    }
+    return (0);
+}
+
+int read_map_fix_colline(char **map, int nb_rows, int nb_cols)
+{
+    if ((nb_rows - 1) > 1 && nb_cols == 1) {
+        if (map[0][0] == '.')
+            map[0][0] = 'x';
+        my_show_word_array(map);
+        return (1);
+    }
+    return (0);
+}
+
 int nb_cols(char **av)
 {
     int i = 0;
@@ -37,22 +59,6 @@ char **load_map(char **map, int size, int pos_row, int pos_col)
     return (map);
 }
 
-int read_map_fix_col(char **map, int nb_rows, int nb_cols)
-{
-    int y = 0;
-    int x = 0;
-    while (y < nb_rows) {
-        while (x < nb_cols) {
-            if (map[y][x] == 'o')
-                return (0);
-            x += 1;
-        }
-        x = 0;
-        y += 1;
-    }
-    return (1);
-}
-
 int main(int ac, char **av)
 {
     if (ac != 2)
@@ -62,13 +68,16 @@ int main(int ac, char **av)
     int rows = my_getnbr(load_file_in_mem(av[1])) + 1, cols = nb_cols(av);
     int row = 0, col = 0;
     char **tab = load_my_tab_from_file(av[1], rows, cols);
-    if (read_map_filled(tab, rows, cols) == 1)
+    if (read_map_fix_rowline(tab, rows, cols) == 1 ||
+    read_map_fix_colline(tab, rows, cols) == 1 || read_map_filled(tab, rows, cols) == 1)
         return (0);
     int i = find_bsq(tab, rows, cols, row, col);
     int pos_row = find_row(tab, rows, cols, row, col);
     int pos_col = find_col(tab, rows, cols, row, col);
     if (read_map_fix_one(tab, rows, cols) == 1)
-        pos_col = pos_col + 1, pos_row = pos_row - 1;
+        pos_col += 1;
+    if (read_map_fix_rowline(tab, rows, cols) == 1)
+        pos_col += 1, pos_row += 1;
     char **map = load_map(tab, i, pos_row, pos_col);
     my_show_word_array(map);
 }

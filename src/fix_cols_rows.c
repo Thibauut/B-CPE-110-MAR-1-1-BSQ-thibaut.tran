@@ -24,14 +24,34 @@ int read_map_filled(char **map, int nb_rows, int nb_cols)
     return (1);
 }
 
-int read_map_fix_empty(char **map, int nb_rows, int nb_cols)
+int read_map_fix_sq_empty(char **map, int nb_rows, int nb_cols)
 {
     int y = 0;
     int x = 0;
     if ((nb_rows - 1) == nb_cols) {
         while (y < nb_rows) {
             while (x < nb_cols) {
-                if (map[y][x] != 'o')
+                if (map[y][x] == 'o')
+                    return (1);
+                else
+                    return (2);
+                x += 1;
+            }
+            x = 0;
+            y += 1;
+        }
+    }
+    return (0);
+}
+
+int read_map_fix_empty_rows(char **map, int nb_rows, int nb_cols)
+{
+    int y = 0;
+    int x = 0;
+    if (nb_rows > nb_cols) {
+        while (y < nb_rows) {
+            while (x < nb_cols) {
+                if (map[y][x] == 'o')
                     return (1);
                 x += 1;
             }
@@ -42,14 +62,14 @@ int read_map_fix_empty(char **map, int nb_rows, int nb_cols)
     return (0);
 }
 
-int read_map_fix_empty2(char **map, int nb_rows, int nb_cols)
+int read_map_fix_empty_cols(char **map, int nb_rows, int nb_cols)
 {
     int y = 0;
     int x = 0;
-    if ((nb_rows - 1) > nb_cols) {
+    if (nb_rows < nb_cols) {
         while (y < nb_rows) {
             while (x < nb_cols) {
-                if (map[y][x] != 'o')
+                if (map[y][x] == 'o')
                     return (1);
                 x += 1;
             }

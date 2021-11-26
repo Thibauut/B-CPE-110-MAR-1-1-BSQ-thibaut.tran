@@ -22,10 +22,10 @@ int open_my_file(char const *filepath)
     return (fd);
 }
 
-void read_my_file(int fd, char *buffer, int size)
+int read_my_file(int fd, char *buffer, int size)
 {
     read(fd, buffer, size);
-    return;
+    return (0);
 }
 
 char *load_file_in_mem(char const *filepath)
@@ -36,8 +36,8 @@ char *load_file_in_mem(char const *filepath)
     char *buffer = malloc(sizeof(char) * size);
     int fd = open_my_file(filepath);
     read_my_file(fd, buffer, size);
-    return (buffer);
     close(fd);
+    return (buffer);
 }
 
 char **load_my_tab_from_file(char const *filepath, int nb_rows, int nb_cols)
@@ -46,13 +46,14 @@ char **load_my_tab_from_file(char const *filepath, int nb_rows, int nb_cols)
     char *tab_str = load_file_in_mem(filepath);
     struct stat buf;
     stat(filepath, &buf);
-    int size_tab = buf.st_size;
-    char **tab = malloc(sizeof(char *) * size_tab);
-    while (tab_str[k] != '\n')
+    int size_tab = nb_rows;
+    char **tab = malloc(sizeof(char *) * size_tab + 1);
+    while (tab_str[k] != '\n') {
         k += 1;
+    }
     k += 1;
     while (i < nb_rows) {
-        tab[i] = malloc(sizeof(char *) * nb_cols);
+        tab[i] = malloc(sizeof(char) * nb_cols + 1);
         while (j < nb_cols) {
             tab[i][j] = tab_str[k];
             j += 1, k += 1;

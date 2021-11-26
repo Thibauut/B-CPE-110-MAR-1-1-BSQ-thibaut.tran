@@ -15,11 +15,10 @@ OBJ	=	$(SRC:.c=.o)
 
 NAME	= bsq
 
-all	:	$(NAME)	$(SRC)
+all	:	$(NAME)
 
 $(NAME)	:	$(OBJ)
-	gcc	-c	-Wall	-g3	-Wextra	$(SRC)
-	gcc	$(OBJ)	-o	$(NAME)
+	gcc	-g $(OBJ) 	-o	$(NAME)
 
 clean :
 	rm	-f	*.o

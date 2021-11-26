@@ -43,8 +43,8 @@ int find_bsq(char **map, int nb_rows, int nb_cols, int row, int col)
         }
         col = 0, row += 1;
     }
-    if (read_map_fix_empty(map, nb_rows, nb_cols) == 1)
-        stock_size_sq = stock_size_sq + 1;
+    if (read_map_fix_sq_empty(map, nb_rows, nb_cols) == 2 && stock_size_sq == nb_cols && stock_size_sq == nb_rows - 1)
+        stock_size_sq += 1;
     return (stock_size_sq - 1);
 }
 
@@ -59,17 +59,16 @@ int find_col(char **map, int nb_rows, int nb_cols, int row, int col)
                     size_sq += 1;
             }
             if (size_sq > stock_size_sq) {
-                stock_size_sq = size_sq;
-                stock_col = col;
+                stock_size_sq = size_sq, stock_col = col;
             }
             col += 1, k = 1;
         }
         col = 0, row += 1;
     }
-    if (read_map_fix_col(map, nb_rows, nb_cols) == 1)
-        stock_col = stock_col - 1;
-    if (read_map_fix_empty2(map, nb_rows, nb_cols) == 1)
-        stock_col = stock_col + 1;
+    if (read_map_fix_sq_empty(map, nb_rows, nb_cols) == 2 && stock_size_sq == nb_cols && stock_size_sq == nb_rows - 1)
+        stock_col -= 1;
+    if (read_map_fix_empty_cols(map, nb_rows, nb_cols) == 0 && stock_col == 1)
+        stock_col -= 1;
     return (stock_col);
 }
 
@@ -92,7 +91,7 @@ int find_row(char **map, int nb_rows, int nb_cols, int row, int col)
         }
         col = 0, row += 1;
     }
-    if (read_map_fix_empty2(map, nb_rows, nb_cols) == 1)
-        stock_row = stock_row - 1;
+    if (read_map_fix_empty_rows(map, nb_rows, nb_cols) == 0 && stock_row == 1)
+        stock_row -= 1;
     return (stock_row);
 }
