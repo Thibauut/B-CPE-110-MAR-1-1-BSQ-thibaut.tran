@@ -8,7 +8,7 @@
 SRC	=	src/load_my_tab.c	\
 		src/find_bsq.c	\
 		src/my_func.c	\
-		src/check_error.c	\
+		src/fix_cols_rows.c	\
 		src/main.c
 
 OBJ	=	$(SRC:.c=.o)

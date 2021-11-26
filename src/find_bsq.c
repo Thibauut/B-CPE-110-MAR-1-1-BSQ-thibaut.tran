@@ -43,6 +43,8 @@ int find_bsq(char **map, int nb_rows, int nb_cols, int row, int col)
         }
         col = 0, row += 1;
     }
+    if (read_map_fix_empty(map, nb_rows, nb_cols) == 1)
+        stock_size_sq = stock_size_sq + 1;
     return (stock_size_sq - 1);
 }
 
@@ -64,9 +66,10 @@ int find_col(char **map, int nb_rows, int nb_cols, int row, int col)
         }
         col = 0, row += 1;
     }
-    int y = read_map_for_bug(map, nb_rows, nb_cols);
-    if (y == 1)
+    if (read_map_fix_col(map, nb_rows, nb_cols) == 1)
         stock_col = stock_col - 1;
+    if (read_map_fix_empty2(map, nb_rows, nb_cols) == 1)
+        stock_col = stock_col + 1;
     return (stock_col);
 }
 
@@ -89,5 +92,7 @@ int find_row(char **map, int nb_rows, int nb_cols, int row, int col)
         }
         col = 0, row += 1;
     }
+    if (read_map_fix_empty2(map, nb_rows, nb_cols) == 1)
+        stock_row = stock_row - 1;
     return (stock_row);
 }

@@ -35,7 +35,11 @@ int check_square(char **map, int row, int col, my_struct_t my_sq);
 char **load_map(char **map, int size, int pos_row, int pos_col);
 int find_row(char **map, int nb_rows, int nb_cols, int row, int col);
 int find_col(char **map, int nb_rows, int nb_cols, int row, int col);
-int read_map_for_bug(char **map, int nb_rows, int nb_cols);
+int read_map_fix_col(char **map, int nb_rows, int nb_cols);
 int read_map_filled(char **map, int nb_rows, int nb_cols);
+int read_map_fix_empty(char **map, int nb_rows, int nb_cols);
+int read_map_fix_empty2(char **map, int nb_rows, int nb_cols);
+int read_map_fix_one(char **map, int nb_rows, int nb_cols);
+int read_map_fix_column(char **map, int nb_rows, int nb_cols);
 
 #endif
