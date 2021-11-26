@@ -42,6 +42,5 @@ int read_map_fix_empty_cols(char **map, int nb_rows, int nb_cols);
 int read_map_fix_one(char **map, int nb_rows, int nb_cols);
 int read_map_fix_rowline(char **map, int nb_rows, int nb_cols);
 int read_map_fix_colline(char **map, int nb_rows, int nb_cols);
-int read_map_nothing(char **map, int nb_rows, int nb_cols);
 
 #endif
